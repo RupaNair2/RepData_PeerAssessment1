@@ -74,12 +74,12 @@ daytype <- function(date) {
     "weekday"
   }
 }
-
+activitydata$daytype <- as.factor(sapply(activitydata$date, daytype))
 library(ggplot2)
 
 steps_per_day_na.rm <- aggregate(steps ~ interval+daytype, activitydata, mean)
 
-ggplot(steps_per_day_na.rm, aes(interval, steps)) + geom_line() + facet_grid(daytype ~ .) + 
+ggplot(steps_per_day_na.rm, aes(interval, steps)) + geom_line(aes(color=daytype)) + facet_grid(daytype ~ .) + 
   xlab("5-minute interval") + ylab("Number of steps")
 ```
 

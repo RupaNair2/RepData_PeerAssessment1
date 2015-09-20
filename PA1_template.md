@@ -1,9 +1,6 @@
-# PA1_template.Rmd
-rupa  
-September 20, 2015  
-Introduction: Assigment 1- Repoducible research
+# Reproducible Research: Peer Assessment 1
 
-Loading and Processing data
+##Loading and preprocessing the data
 
 ```r
 activitydata<-read.csv("activity.csv")
@@ -28,7 +25,9 @@ colnames(activitydata)
 ## [1] "steps"    "date"     "interval"
 ```
 
-What is mean total number of steps taken per day?
+
+
+##What is mean total number of steps taken per day?
 
 ```r
 Totalsteps_day<-aggregate(steps~date, data=activitydata, sum)
@@ -53,7 +52,9 @@ median(Totalsteps_day$steps)
 ## [1] 10765
 ```
 
-What is the average daily activity pattern?
+
+
+##What is the average daily activity pattern?
 
 ```r
 Avgdailyactv<-tapply(activitydata$steps,activitydata$interval,mean,na.rm=TRUE)
@@ -64,8 +65,8 @@ plot(x=names(Avgdailyactv),y=Avgdailyactv, type = "l", xlab = "5-min interval",
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
-Imputing missing values
 
+##Imputing missing values
 Calculate and report the total number of missing values in the dataset 
 
 ```r
@@ -127,6 +128,8 @@ median(Totalsteps_day_NA.rm$steps)
 ```
 
 
+## Are there differences in activity patterns between weekdays and weekends
+
 ```r
 daytype <- function(date) {
   if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
@@ -140,8 +143,11 @@ library(ggplot2)
 
 steps_per_day_na.rm <- aggregate(steps ~ interval+daytype, activitydata, mean)
 
-ggplot(steps_per_day_na.rm, aes(interval, steps)) + geom_line(aes(color = daytype)) + facet_grid(daytype ~ .) + 
-  xlab("5-minute interval") + ylab("Number of steps") 
+ggplot(steps_per_day_na.rm, aes(interval, steps)) + geom_line(aes(color=daytype)) + facet_grid(daytype ~ .) + 
+  xlab("5-minute interval") + ylab("Number of steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+
+
+
