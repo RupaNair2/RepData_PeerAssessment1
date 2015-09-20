@@ -65,5 +65,23 @@ median(Totalsteps_day_NA.rm$steps)
 ```
 
 
+## Are there differences in activity patterns between weekdays and weekends
+```{r,echo=TRUE}
+daytype <- function(date) {
+  if (weekdays(as.Date(date)) %in% c("Saturday", "Sunday")) {
+    "weekend"
+  } else {
+    "weekday"
+  }
+}
+
+library(ggplot2)
+
+steps_per_day_na.rm <- aggregate(steps ~ interval+daytype, activitydata, mean)
+
+ggplot(steps_per_day_na.rm, aes(interval, steps)) + geom_line() + facet_grid(daytype ~ .) + 
+  xlab("5-minute interval") + ylab("Number of steps")
+```
+
 
 
